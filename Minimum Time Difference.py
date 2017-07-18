@@ -21,21 +21,9 @@ class unitest(unittest.TestCase):
 
 class Solution():
     def findMinDifference(self, timePoints):
-        def GetTotal(timePointsA,timePointsB):
-            if(timePointsA == timePointsB):
-                return 0
-            hour = int(timePointsA[:2]) - int(timePointsB[:2])
-            minute = int(timePointsA[3:]) - int(timePointsB[3:])
-            total = abs(hour*60 + minute)
-            total = min(total,abs(total-1440))
-            return total
-        timePoints.sort(key = lambda a : (int(a[:2]),int(a[3:])))
-        Ans = sys.maxsize
-        for indexA in range(len(timePoints)-1):
-            Ans = min(Ans,GetTotal(timePoints[indexA],timePoints[indexA+1]))
-        Ans = min(Ans,GetTotal(timePoints[0],timePoints[len(timePoints)-1]))
-        return Ans
-        
+        mins = sorted((int(mins[:2]) * 60 + int(mins[3:])) for mins in timePoints)
+        mins.append(mins[0]+1440)
+        return min(b-a for (a,b) in zip(mins,mins[1:]))
 
 if __name__ == '__main__':
     unittest.main()
